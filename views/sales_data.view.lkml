@@ -61,6 +61,19 @@ view: sales_data {
     type: number
     sql: ${TABLE}.unit_price ;;
   }
+
+  dimension: total_tickets {
+    label: "Total de tickets"
+    type: number
+    sql: ${active_tickets} + ${closed_tickets} ;;
+  }
+
+  measure: total_sales {
+    label: "Total de ventas"
+    type: sum
+    sql: ${sales} ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [state]
