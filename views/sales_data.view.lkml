@@ -1,15 +1,15 @@
 #Adding tests for the view
 
-test: ventas_tiene_registros {
-  explore_source: sales_data 
-  filter: {field: sales_data.sales is not null}
-  assert: row_count > 0
-}
-
-test: ventas_id_unico {
-  explore_source: sales_data
-  group_by: sales_data.state
-  assert: count(*) == 1
+test: precio_unitario_no_es_cero {
+    explore_source: sales_data {
+      column: unit_price {}
+      column: count {}
+      sorts: [sales_data.count: desc]
+      limit:  1
+    }
+    assert: sales_not_null {
+      expression: ${sales_data.unit_price} > 0 ;;
+    }
 }
 
 # The name of this view in Looker is "Sales Data"
