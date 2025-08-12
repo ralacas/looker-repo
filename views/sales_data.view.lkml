@@ -1,13 +1,15 @@
 #Adding tests for the view
 
-test: no_null_values {
-  explore_source: sales_data {
-    column: count {
-    }
-  }
-  assert: clients_count_is_not_null {
-    expression: NOT ${clients.count} > 0 ;;
-  }
+test: ventas_tiene_registros {
+  explore_source: sales_data 
+  filter: {field: sales_data.sales is not null}
+  assert: row_count > 0
+}
+
+test: ventas_id_unico {
+  explore_source: sales_data
+  group_by: sales_data.state
+  assert: count(*) == 1
 }
 
 # The name of this view in Looker is "Sales Data"
