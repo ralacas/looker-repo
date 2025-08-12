@@ -1,3 +1,15 @@
+#Adding tests for the view
+
+test: no_null_values {
+  explore_source: sales_data {
+    column: count {
+    }
+  }
+  assert: clients_count_is_not_null {
+    expression: NOT ${clients.count} > 0 ;;
+  }
+}
+
 # The name of this view in Looker is "Sales Data"
 view: sales_data {
   # The sql_table_name parameter indicates the underlying database table
